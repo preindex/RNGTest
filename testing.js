@@ -7,10 +7,17 @@ import { pseudoRandom } from './generators/pseudoRandom'
 
 const chi2test = require('@stdlib/stats-chi2test')
 
-const expected = [1, 2, 3, 4, 5]
-const die = [pseudoRandom(10), pseudoRandom(10), pseudoRandom(10), pseudoRandom(10), pseudoRandom(10)]
+const die = [1, 2, 3, 4, 5]
+const expected = [5, 4, 3, 2, 1]
+// const die = [pseudoRandom(10), pseudoRandom(10), pseudoRandom(10), pseudoRandom(10), pseudoRandom(10)]
 const Test = chi2test([expected, die]).toJSON()
 
 console.log({pValue: Test.pValue, statistic: Test.statistic})
 console.log({Expected: expected})
 console.log({Result: die})
+
+
+/*
+  pValue: 0.15458730450476044,
+  statistic: 6.666666666666666,
+*/

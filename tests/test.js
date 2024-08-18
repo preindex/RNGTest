@@ -82,6 +82,6 @@ function getAverage(dataset, generator, revealLocal) {
 }
 
 getAverage(weakArrays, "Weak Generator")
-// getAverage(pseudoArrays, "Pseudo Generator")
+getAverage(pseudoArrays, "Pseudo Generator")
 getAverage(trueArrays, "True Generator")
 getAverage(quantumArrays, "Quantum Generator")
