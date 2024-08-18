@@ -40,7 +40,7 @@ async function writeData() {
     
         for (let i = 0; i < 10; i++) {
             actualData[actualData.length] = `Weak, ${i + 1}, ${weakArray[i]}`
-            actualData[actualData.length] = `Pseudo, ${i + 1} ${pseudoArray[i]}`
+            actualData[actualData.length] = `Pseudo, ${i + 1}, ${pseudoArray[i]}`
             actualData[actualData.length] = `True, ${i + 1}, ${trueArray[i]}`
             actualData[actualData.length] = `Quantum, ${i + 1}, ${quantumArray[i]}`
         }
