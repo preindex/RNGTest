@@ -1,0 +1,50 @@
+trial_num, generator, number
+1, Weak Random, 3
+1, Pseudo Random, 2
+1, True Random, 3
+1, Quantum Random, 10
+
+2, Weak Random, 9
+2, Pseudo Random, 9
+2, True Random, 5
+2, Quantum Random, 3
+
+3, Weak Random, 7
+3, Pseudo Random, 2
+3, True Random, 9
+3, Quantum Random, 1
+
+4, Weak Random, 10
+4, Pseudo Random, 2
+4, True Random, 1
+4, Quantum Random, 5
+
+5, Weak Random, 6
+5, Pseudo Random, 2
+5, True Random, 9
+5, Quantum Random, 2
+
+6, Weak Random, 9
+6, Pseudo Random, 5
+6, True Random, 8
+6, Quantum Random, 2
+
+7, Weak Random, 3
+7, Pseudo Random, 1
+7, True Random, 10
+7, Quantum Random, 6
+
+8, Weak Random, 2
+8, Pseudo Random, 8
+8, True Random, 3
+8, Quantum Random, 9
+
+9, Weak Random, 5
+9, Pseudo Random, 6
+9, True Random, 5
+9, Quantum Random, 2
+
+10, Weak Random, 2
+10, Pseudo Random, 1
+10, True Random, 8
+10, Quantum Random, 9
