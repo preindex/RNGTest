@@ -1,1 +1,5 @@
-{}
+{
+  "dependencies": {
+    "@stdlib/stats-chi2test": "^0.2.1"
+  }
+}

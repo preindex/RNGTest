@@ -8,6 +8,7 @@
 export async function quantumRandom(low, high, max) {
     let Numbers = []
     let Request = (await fetch(`https://qrng.anu.edu.au/API/jsonI.php?length=${max}&type=uint16`))
+    console.log(Request)
     let Data = (await Request.json()).data
     Data.forEach(value => {
         Numbers[Numbers.length] = Math.round((value / 65535) * (high - low) + low)
