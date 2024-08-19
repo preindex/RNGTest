@@ -48,6 +48,8 @@ function getAverage(dataset, generator, revealLocal) {
     let Arrays = pvalue_test(dataset, true)
     let localAverages = []
 
+    let ArrayIndex = 0
+
     Arrays.forEach((Array) => {
         let LocalAveragePValue = 0
         let LocalAverageStatistic = 0
@@ -59,8 +61,8 @@ function getAverage(dataset, generator, revealLocal) {
         LocalAveragePValue /= Array.length
         LocalAverageStatistic /= Array.length
         if (revealLocal) {
-            console.log(`Local Average P-Value for ${generator} #${LocalAverage.length} Data: ${LocalAveragePValue}`)
-            console.log(`Local Average Statistic for ${generator} #${LocalAverage.length} Data: ${LocalAveragePValue}`)
+            console.log(`Local Average P-Value for ${generator} #${++ArrayIndex} Data: ${LocalAveragePValue}`)
+            console.log(`Local Average Statistic for ${generator} #${ArrayIndex} Data: ${LocalAverageStatistic}`)
         }
         localAverages[localAverages.length] = [LocalAveragePValue, LocalAverageStatistic]
     })
@@ -84,7 +86,7 @@ function getAverage(dataset, generator, revealLocal) {
 }
 
 let Ranking =  []
-Ranking[Ranking.length] = getAverage(weakArrays, "Weak Generator", true)
+Ranking[Ranking.length] = getAverage(weakArrays, "Weak Generator")
 Ranking[Ranking.length] = getAverage(pseudoArrays, "Pseudo Generator")
 Ranking[Ranking.length] = getAverage(trueArrays, "True Generator")
 Ranking[Ranking.length] = getAverage(quantumArrays, "Quantum Generator")
