@@ -45,7 +45,7 @@ fs.readdirSync('./logs').forEach(file => {
 })
 
 function getAverage(dataset, generator, revealLocal) {
-    let Arrays = pvalue_test(dataset)
+    let Arrays = pvalue_test(dataset, true)
     let localAverages = []
 
     Arrays.forEach((Array) => {
@@ -85,3 +85,7 @@ getAverage(weakArrays, "Weak Generator")
 getAverage(pseudoArrays, "Pseudo Generator")
 getAverage(trueArrays, "True Generator")
 getAverage(quantumArrays, "Quantum Generator")
+
+function frequencyTest(dataset) {
+    
+}
