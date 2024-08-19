@@ -10,8 +10,6 @@ const crypto = require('crypto')
 
 const chi2test = require('@stdlib/stats-chi2test')
 
-const die = [1, 2, 3, 4, 5]
-const expected = [5, 4, 3, 2, 1]
 // const die = [pseudoRandom(10), pseudoRandom(10), pseudoRandom(10), pseudoRandom(10), pseudoRandom(10)]
 const Test = chi2test([expected, die]).toJSON()
 
@@ -29,13 +27,5 @@ function createHash(string) {
     return crypto.createHash('sha1').update(string).digest('hex')
 }
 
-let t = createHash(die.toString())
-let t2 = createHash(expected.toString())
-let t3 = t + t2
-
-if (t + t2 == t3) console.log('skibidi toilet')
-
-
-let a = []
-
-console.log(0 + a[1])
+let expected = []
+let result = []

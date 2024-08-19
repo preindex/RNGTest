@@ -79,12 +79,29 @@ function getAverage(dataset, generator, revealLocal) {
     console.log(`True Average P-Value Across All ${generator} Data: ${AveragePValue}`)
     console.log(`True Average Statistic Across All ${generator} Data: ${AverageStatistic}`)
     console.log(('-').repeat(25))
+
+    return [AveragePValue, AverageStatistic, generator]
 }
 
-getAverage(weakArrays, "Weak Generator")
-getAverage(pseudoArrays, "Pseudo Generator")
-getAverage(trueArrays, "True Generator")
-getAverage(quantumArrays, "Quantum Generator")
+let Ranking =  []
+Ranking[Ranking.length] = getAverage(weakArrays, "Weak Generator", true)
+Ranking[Ranking.length] = getAverage(pseudoArrays, "Pseudo Generator")
+Ranking[Ranking.length] = getAverage(trueArrays, "True Generator")
+Ranking[Ranking.length] = getAverage(quantumArrays, "Quantum Generator")
+
+Ranking.sort((x, y) => {
+    // 0 = Average P-Value
+    // 1 = Average Statistic
+    // 2 = Generator Name
+    if (x[1] === y[1]) {
+        return y[0] - x[0]; // If statistics are equal, sort by p-value in descending order
+    }
+    return x[1] - y[1]; // Otherwise, sort by statistic in ascending order
+});
+
+for (let Array of Ranking) {
+    console.log(Array[2])
+}
 
 function frequencyTest(dataset) {
     
