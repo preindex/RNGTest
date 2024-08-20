@@ -32,7 +32,7 @@ export function pvalue_test(data, removeEmpty) { // Chi Square Test
                 }
                 // console.log(`Comparing ${localHash} & ${currentHash}`)
                 let Body = chi2test([localSet, data[i]])
-                Sets.push({pValue: Body.pValue, stat: Body.statistic})
+                Sets.push({pValue: Body.pValue, stat: Body.statistic, degrees: Body.df})
                 PossibleHashes[PossibleHashes.length] = localHash + currentHash
             }
         }

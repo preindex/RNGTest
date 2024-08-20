@@ -51,34 +51,42 @@ function getAverage(dataset, generator, revealLocal) {
     let ArrayIndex = 0
 
     Arrays.forEach((Array) => {
+        let LocalDegrees = 0
         let LocalAveragePValue = 0
         let LocalAverageStatistic = 0
         for (let i = 0; i < Array.length; i++) {
-            let { pValue, stat } = Array[i]
+            let { pValue, stat, degrees } = Array[i]
             LocalAveragePValue += pValue
             LocalAverageStatistic += stat
+            LocalDegrees += degrees
         }
+        LocalDegrees /= Array.length
         LocalAveragePValue /= Array.length
         LocalAverageStatistic /= Array.length
         if (revealLocal) {
+            console.log(`Local Average Degrees for ${generator} #${ArrayIndex} Data: ${LocalDegrees}`)
             console.log(`Local Average P-Value for ${generator} #${++ArrayIndex} Data: ${LocalAveragePValue}`)
             console.log(`Local Average Statistic for ${generator} #${ArrayIndex} Data: ${LocalAverageStatistic}`)
         }
-        localAverages[localAverages.length] = [LocalAveragePValue, LocalAverageStatistic]
+        localAverages[localAverages.length] = [LocalAveragePValue, LocalAverageStatistic, LocalDegrees]
     })
 
     let AveragePValue = 0
     let AverageStatistic = 0
-
+    let AverageDegrees = 0
+    
     localAverages.forEach(value => {
         AveragePValue += value[0]
         AverageStatistic += value[1]
+        AverageDegrees += value[2]
     })
     
+    AverageDegrees /= localAverages.length
     AveragePValue /= localAverages.length
     AverageStatistic /= localAverages.length
     
     console.log(`True Average P-Value Across All ${generator} Data: ${AveragePValue}`)
+    console.log(`True Average Degree Across All ${generator} Data: ${AverageDegrees}`)   
     console.log(`True Average Statistic Across All ${generator} Data: ${AverageStatistic}`)
     console.log(('-').repeat(25))
 
