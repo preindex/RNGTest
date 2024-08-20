@@ -99,20 +99,25 @@ Ranking[Ranking.length] = getAverage(pseudoArrays, "Pseudo Generator")
 Ranking[Ranking.length] = getAverage(trueArrays, "True Generator")
 Ranking[Ranking.length] = getAverage(quantumArrays, "Quantum Generator")
 
-Ranking.sort((x, y) => {
+Ranking.sort((a, b) => {
     // 0 = Average P-Value
     // 1 = Average Statistic
     // 2 = Generator Name
-    if (x[1] === y[1]) {
-        return y[0] - x[0]; // If statistics are equal, sort by p-value in descending order
+    // First, compare by p-value (element[0])
+    if (a[0] !== b[0]) {
+        return a[0] - b[0]; // Ascending order for p-value
     }
-    return x[1] - y[1]; // Otherwise, sort by statistic in ascending order
+    // If p-values are the same, compare by statistic (element[1])
+    return b[1] - a[1]; // Descending order for statistic
 });
 
-for (let Array of Ranking) {
-    console.log(Array[2])
+console.log(`Ranking (from most random to least)`)
+
+{    
+    let Index = 1
+    for (let Array of Ranking) {
+        console.log("   --> " + Array[2] + ` (#${Index++}) [${Array[0] > 16.92 ? "Large (reject null)" : "Small (accept null)"}]`) // 16.92 is the critical value for DoF of 9 and alpha of 0.05
+    }
 }
 
-function frequencyTest(dataset) {
-    
-}
+console.log(`--------------------------------\nshoutout to miguel he's my goat fr`)
