@@ -1,4 +1,4 @@
-import { create } from 'domain';
+import fs from 'fs';
 
 const chi2test = require('@stdlib/stats-chi2test');
 const crypto = require('crypto')
@@ -6,7 +6,6 @@ const crypto = require('crypto')
 function createHash(string) {
     return crypto.createHash('sha1').update(string).digest('hex')
 }
-
 
 export function repeat_test(data) { // Repeat Test
     // 10 sets data

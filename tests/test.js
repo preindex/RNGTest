@@ -1,11 +1,18 @@
-import { repeat_test, pvalue_test } from './tests';
-
-const fs = require('fs')
+import {pvalue_test} from '../modules/tests'
+import { generateRNGCharts } from '../modules/generateCharts';
+import fs from 'fs';
 
 let weakArrays = [];
 let pseudoArrays = [];
 let trueArrays = [];
 let quantumArrays = [];
+
+let distributions = {
+    "Weak": [],
+    "Pseudo": [],
+    "True": [],
+    "Quantum": []
+};
 
 fs.readdirSync('./logs').forEach(file => {
     let Data = fs.readFileSync(`./logs/${file}`, 'utf8').split('\n').splice(1)
@@ -19,6 +26,8 @@ fs.readdirSync('./logs').forEach(file => {
         let v = Data[i].split(', ')
         let Generator = v[0]
         let Value = parseInt(v[2])
+
+        distributions[Generator].push(Value); // Store for histogram
 
         switch(Generator) {
             case "Weak":
@@ -93,11 +102,12 @@ function getAverage(dataset, generator, revealLocal) {
     return [AveragePValue, AverageStatistic, generator]
 }
 
-let Ranking =  []
-Ranking[Ranking.length] = getAverage(weakArrays, "Weak Generator")
-Ranking[Ranking.length] = getAverage(pseudoArrays, "Pseudo Generator")
-Ranking[Ranking.length] = getAverage(trueArrays, "True Generator")
-Ranking[Ranking.length] = getAverage(quantumArrays, "Quantum Generator")
+let Ranking = [
+    getAverage(weakArrays, "Weak Generator"),
+    getAverage(pseudoArrays, "Pseudo Generator"),
+    getAverage(trueArrays, "True Generator"),
+    getAverage(quantumArrays, "Quantum Generator")
+];
 
 Ranking.sort((a, b) => {
     // 0 = Average P-Value
@@ -110,6 +120,8 @@ Ranking.sort((a, b) => {
     // If p-values are the same, compare by statistic (element[1])
     return b[1] - a[1]; // Descending order for statistic
 });
+
+await generateRNGCharts(Ranking, distributions);
 
 console.log(`Ranking (from most random to least)`)
 
