@@ -51,7 +51,8 @@ export async function generateRNGCharts(rankingData, distributions) {
         "chi_square_distribution.png"
     );
 
-    await generateLineGraph(distributions);
+    await generateHistogramOverTime(distributions);
+    await generateScatterPlot(distributions);
     await generateBoxplot(distributions);
     await generateQQPlot(distributions);
     
@@ -98,48 +99,74 @@ async function generateChart(labels, datasets, datasetLabels, title, filename) {
     console.log(`📊 Saved ${filename}`);
 }
 
-/**
- * Generates a line graph showing the sequence of generated numbers over time.
- * @param {Object} distributions - Object containing number sequences for each RNG.
- */
-async function generateLineGraph(distributions) {
+async function generateScatterPlot(distributions) {
     const width = 1000, height = 600;
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext('2d');
 
-    // Generate x-axis labels (1, 2, 3, ... for each number generated)
-    const labels = Array.from({ length: Math.max(...Object.values(distributions).map(d => d.length)) }, (_, i) => i + 1).toString();
-
-    // Prepare datasets correctly
     const datasets = Object.entries(distributions).map(([generator, values], index) => ({
         label: generator,
-        data: values.slice(0, labels.length),  // Match x-axis length
+        data: values.map((value, i) => ({ x: i, y: value })),  // X = time step, Y = generated value
         borderColor: ['red', 'blue', 'green', 'purple'][index],
-        borderWidth: 2,
-        fill: false,
-        tension: 0.1
+        backgroundColor: ['red', 'blue', 'green', 'purple'][index],
+        showLine: false,
+        pointRadius: 3
     }));
 
     const chartConfig = {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: datasets
-        },
+        type: 'scatter',
+        data: { datasets: datasets },
         options: {
             scales: {
                 x: { title: { display: true, text: "Time Step" } },
                 y: { title: { display: true, text: "Generated Value" } }
             },
             plugins: {
-                title: { display: true, text: "RNG Number Trends Over Time" }
+                title: { display: true, text: "Scatter Plot of RNG Outputs Over Time" }
             }
         }
     };
 
     new Chart(ctx, chartConfig);
-    saveFile('line_graph_rng.png', canvas.toBuffer('image/png'));
-    console.log("📈 Saved 'line_graph_rng.png'");
+    saveFile('scatter_rng.png', canvas.toBuffer('image/png'));
+    console.log("📊 Saved 'scatter_rng.png'");
+}
+
+async function generateHistogramOverTime(distributions) {
+    const width = 1000, height = 600;
+    const canvas = createCanvas(width, height);
+    const ctx = canvas.getContext('2d');
+
+    const datasets = Object.entries(distributions).map(([generator, values], index) => ({
+        label: generator,
+        data: values.reduce((bins, value, i) => {
+            let binIndex = Math.floor(i / 50);  // Adjust bin width here
+            bins[binIndex] = (bins[binIndex] || 0) + value;
+            return bins;
+        }, []),        
+        backgroundColor: ['red', 'blue', 'green', 'purple'][index]
+    }));
+
+    const chartConfig = {
+        type: 'bar',
+        data: {
+            labels: datasets[0].data.map((_, i) => `T${i * 50}-${(i + 1) * 50}`), // Bin labels
+            datasets: datasets
+        },
+        options: {
+            scales: {
+                x: { title: { display: true, text: "Time Interval (Binned)" } },
+                y: { title: { display: true, text: "Sum of RNG Outputs" } }
+            },
+            plugins: {
+                title: { display: true, text: "Histogram of RNG Outputs Over Time" }
+            }
+        }
+    };
+
+    new Chart(ctx, chartConfig);
+    saveFile('histogram_over_time.png', canvas.toBuffer('image/png'));
+    console.log("📊 Saved 'histogram_over_time.png'");
 }
 
 /**
@@ -188,7 +215,7 @@ export async function generateBoxplot(distributions) {
             scales: {
                 x: {
                     title: { display: true, text: "RNG Generators" },
-                    ticks: { callback: (val, i) => String(Object.keys(distributions)[i]) }
+                    ticks: { callback: (val, i) => distributions[val] ? String(Object.keys(distributions)[val]) : "" }
                 },
                 y: { title: { display: true, text: "Generated Value" } }
             },
@@ -225,6 +252,15 @@ async function generateQQPlot(distributions) {
             showLine: false,
             pointRadius: 3
         };
+    });
+
+    datasets.push({
+        label: 'Ideal Uniform',
+        data: Array.from({ length: 100 }, (_, i) => ({ x: i / 100, y: i / 100 * maxValue })),
+        borderColor: 'white',
+        borderWidth: 2,
+        fill: false,
+        pointRadius: 0
     });
 
     const chartConfig = {
