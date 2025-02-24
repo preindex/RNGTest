@@ -1,2 +1,0 @@
-
-    let AveragePValue = 0

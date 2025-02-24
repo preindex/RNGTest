@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "@stdlib/stats-chi2test": "^0.2.1"
+    "@napi-rs/canvas": "^0.1.67",
+    "@stdlib/stats-chi2test": "^0.2.1",
+    "chartjs-node-canvas": "^4.1.6"
   }
 }
