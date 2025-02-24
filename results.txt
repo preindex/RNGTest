@@ -2,27 +2,27 @@
 Runs Test Results:
 -------------------------
 Weak Generator:
-Z-Statistic: -2.655780127510948
-P-Value: 0.008022031797681916
+Z-Statistic: -2.653101691852388
+P-Value: 0.0081045701412977
 -------------------------
 Pseudo Generator:
-Z-Statistic: -2.659356441154573
-P-Value: 0.007937956239453885
+Z-Statistic: -2.6531016918523873
+P-Value: 0.0081045701412977
 -------------------------
 True Generator:
-Z-Statistic: -2.6731895416139584
-P-Value: 0.007528529923330388
+Z-Statistic: -2.6740205096489627
+P-Value: 0.007507499207175889
 -------------------------
 Quantum Generator:
-Z-Statistic: -2.6752468925405113
-P-Value: 0.007473571302751714
+Z-Statistic: -2.6743397263230424
+P-Value: 0.00749663752337209
 -------------------------
 -------------------------
 KTest Results
-  --> Weak Generator (p-value: 0.467907793175682, statistic: 0.28484848484848463)
-  --> Pseudo Generator (p-value: 0.49075261755712113, statistic: 0.27619047619047604)
-  --> True Generator (p-value: 0.4728882053031394, statistic: 0.2865800865800865)
-  --> Quantum Generator (p-value: 0.4737917599387862, statistic: 0.2844155844155843)
+  --> Weak Generator (p-value: 0.42511576495147957, statistic: 0.31225071225071227)
+  --> Pseudo Generator (p-value: 0.4891118618882613, statistic: 0.2760683760683766)
+  --> True Generator (p-value: 0.45564920937444264, statistic: 0.29914529914529925)
+  --> Quantum Generator (p-value: 0.45849816344071986, statistic: 0.2937321937321938)
 --------------------------------
 Ranking (from most random to least)
    --> Quantum Generator (#1) [Small (accept null)]
