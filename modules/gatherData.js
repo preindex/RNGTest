@@ -12,6 +12,7 @@ import { weakRandom } from "../generators/weakRandom";
 import { pseudoRandom } from "../generators/pseudoRandom";
 import { trueRandom } from "../generators/trueRandom";
 import { quantumRandom } from "../generators/quantumRandom";
+import { quantumRandom2 } from "../generators/quantumRandom2";
 
 const fs = require('fs')
 
@@ -23,14 +24,12 @@ async function writeData() {
         let Name = `logs/${crypto.randomUUID()}.txt`;
         let weakArray = [];
         let pseudoArray = [];
-        let trueArray = [];
-        let quantumArray = await quantumRandom(1, 10, 10);
+        let trueArray = await trueRandom(1, 10, 10);;
+        let quantumArray = await quantumRandom2(1, 10, 10) // await quantumRandom(1, 10, 10);
     
-        (await trueRandom(1, 10, 10)).split('\n').forEach((value, index) => {
-            if (index == 10) return;
-            trueArray[index] = parseInt(value)
-        })
-    
+        console.log("Gathered the quantum data.")
+        console.log("Gathered the true data.")
+
         for (let ford = 0; ford < 10; ford++) { // we got ford++ before GTA 6
             weakArray[weakArray.length] = weakRandom(1, 10)
             pseudoArray[pseudoArray.length] = pseudoRandom(1, 10)
@@ -52,12 +51,17 @@ async function writeData() {
     } catch(e) {}
 }
 
-setInterval(async () => {
-    let self;self = setInterval(() => {
-        writeData()
-        if (WroteData) return clearInterval(self);
-    }, 5000);
-}, 120000);
+// setInterval(async () => {
+//     let self;self = setInterval(() => {
+//         writeData()
+//         if (WroteData) return clearInterval(self);
+//     }, 5000);
+// }, 120000);
+
+let self;self = setInterval(() => {
+    writeData()
+    if (WroteData) return clearInterval(self);
+}, 2000);
 
 console.log("Starting...")
 await writeData()

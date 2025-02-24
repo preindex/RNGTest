@@ -6,5 +6,14 @@
 */
 
 export async function trueRandom(low, high, max) {
-    return (await fetch(`https://www.random.org/integers/?num=${max || 1}&min=${low}&max=${high}&col=1&base=10&format=plain&rnd=new`)).text()
+    const response = await fetch(`https://www.random.org/integers/?num=${max || 1}&min=${low}&max=${high}&col=1&base=10&format=plain&rnd=new`);
+    const result = await response.text();
+    
+    let data = []
+
+    result.split('\n').forEach(value => {
+        data[data.length] = parseInt(value)
+    })
+
+    return data;
 }
