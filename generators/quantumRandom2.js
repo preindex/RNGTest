@@ -1,8 +1,6 @@
 /*
     quantumRandom
-    Generates a random number given a range using quantum principles.
-    However, to get the range, the values are normalized.
-    This shouldn't affect the random number IN THEORY, but I'm not sure I'll ever know.
+    Generates a random number given a range using quantum principles such as quantum fluctuations.
 */
 
 export async function quantumRandom2(low, high, max) {
