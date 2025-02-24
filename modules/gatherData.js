@@ -58,10 +58,12 @@ async function writeData() {
 //     }, 5000);
 // }, 120000);
 
+let c = 0;
+console.log("Starting...")
+await writeData()
+
 let self;self = setInterval(() => {
+    if (c++ == 31) return clearInterval(self);
     writeData()
     if (WroteData) return clearInterval(self);
 }, 2000);
-
-console.log("Starting...")
-await writeData()
