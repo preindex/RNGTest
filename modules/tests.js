@@ -171,12 +171,6 @@ export function runs_test(data) {
         let n1 = 0, n2 = 0;
         binarySequence.forEach(num => num === 1 ? n1++ : n2++);
         
-        // Prevent division errors for small samples
-        if (n1 < 5 || n2 < 5) {
-            console.warn(`Sample sizes too small (${n1}, ${n2}); Runs Test may be unreliable.`);
-            continue;
-        }
-
         // Calculate expected runs and standard deviation
         let expectedRuns = ((2 * n1 * n2) / (n1 + n2)) + 1;
         let standardDev = Math.sqrt((2 * n1 * n2 * (2 * n1 * n2 - n1 - n2)) / 
@@ -207,26 +201,6 @@ export function runs_test(data) {
 }
 
 // More accurate normal CDF using erf approximation
-function normalCDF(z) {
-    return 0.5 * (1 + erf(z / Math.SQRT2));
-}
-
-// Error function approximation
-function erf(x) {
-    let a1 =  0.254829592, a2 = -0.284496736, a3 =  1.421413741;
-    let a4 = -1.453152027, a5 =  1.061405429;
-    let p  =  0.3275911;
-
-    let sign = x < 0 ? -1 : 1;
-    x = Math.abs(x);
-
-    let t = 1 / (1 + p * x);
-    let y = 1 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-
-    return sign * y;
-}
-
-
 function normalCDF(z) {
     return 0.5 * (1 + erf(z / Math.SQRT2));
 }
