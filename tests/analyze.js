@@ -14,6 +14,10 @@ let distributions = {
     "Quantum": []
 };
 
+let results = [];
+
+let old = console.log
+console.log = function() {}
 fs.readdirSync('./logs').forEach(file => {
     let Data = fs.readFileSync(`./logs/${file}`, 'utf8').split('\n').splice(1)
     
@@ -51,7 +55,110 @@ fs.readdirSync('./logs').forEach(file => {
     pseudoArrays[pseudoArrays.length] = pseudoArray
     trueArrays[trueArrays.length] = trueArray
     quantumArrays[quantumArrays.length] = quantumArray
+
+    getData();
 })
+
+console.log = old
+
+function getData() {
+    let ksResults = [
+        getKSTestResults(weakArrays, "Weak Generator"),
+        getKSTestResults(pseudoArrays, "Pseudo Generator"),
+        getKSTestResults(trueArrays, "True Generator"),
+        getKSTestResults(quantumArrays, "Quantum Generator")
+    ];
+    
+    let chiResults = [
+        getAverage(weakArrays, "Weak Generator"),
+        getAverage(pseudoArrays, "Pseudo Generator"),
+        getAverage(trueArrays, "True Generator"),
+        getAverage(quantumArrays, "Quantum Generator")
+    ];
+    
+    // Add runs test results
+    let runsResults = [
+        runs_test(weakArrays),
+        runs_test(pseudoArrays),
+        runs_test(trueArrays),
+        runs_test(quantumArrays)
+    ];
+
+    results[results.length] = [ksResults, chiResults, runsResults]
+}
+
+
+function generateCSVs() {
+    convertResultsToCSV(results);
+}
+
+function convertResultsToCSV(results) {
+    const fs = require('fs');
+    const headers = {
+        kstest: {
+            pvalue: "Trial Index,Average P-Value,Generator\n",
+            statistic: "Trial Index,Average Statistic,Generator\n"
+        },
+        chi: {
+            pvalue: "Trial Index,Average P-Value,Generator\n",
+            statistic: "Trial Index,Average Statistic,Generator\n"
+        },
+        run: {
+            zstat: "Trial Index,Z-Statistic,Generator\n",
+            pvalue: "Trial Index,P-Value,Generator\n"
+        }
+    };
+
+    const data = {
+        kstest: { pvalue: {}, statistic: {} },
+        chi: { pvalue: {}, statistic: {} },
+        run: { zstat: {}, pvalue: {} }
+    };
+
+    // Initialize data structure
+    ['Weak', 'Pseudo', 'True', 'Quantum'].forEach(gen => {
+        data.kstest.pvalue[gen] = [];
+        data.kstest.statistic[gen] = [];
+        data.chi.pvalue[gen] = [];
+        data.chi.statistic[gen] = [];
+        data.run.zstat[gen] = [];
+        data.run.pvalue[gen] = [];
+    });
+
+    // Group data by generator
+    results.forEach(([ksResults, chiResults, runsResults], trialIndex) => {
+        ksResults.forEach(([pValue, statistic, generator]) => {
+            const gen = generator.split(' ')[0];
+            data.kstest.pvalue[gen].push(`${trialIndex},${pValue},${generator}`);
+            data.kstest.statistic[gen].push(`${trialIndex},${statistic},${generator}`);
+        });
+
+        chiResults.forEach(([pValue, statistic, generator]) => {
+            const gen = generator.split(' ')[0];
+            data.chi.pvalue[gen].push(`${trialIndex},${pValue},${generator}`);
+            data.chi.statistic[gen].push(`${trialIndex},${statistic},${generator}`);
+        });
+
+        runsResults.forEach((result, index) => {
+            const generators = ["Weak", "Pseudo", "True", "Quantum"];
+            const gen = generators[index];
+            data.run.zstat[gen].push(`${trialIndex},${result.statistic},${gen}`);
+            data.run.pvalue[gen].push(`${trialIndex},${result.pValue},${gen}`);
+        });
+    });
+
+    // Write grouped data to files
+    for (const [testType, metrics] of Object.entries(data)) {
+        for (const [metricType, generatorData] of Object.entries(metrics)) {
+            const allLines = Object.values(generatorData).flat();
+            fs.writeFileSync(
+                `results/${testType}_${metricType}_results.csv`, 
+                headers[testType][metricType] + allLines.join('\n')
+            );
+        }
+    }
+}
+
 
 function getAverage(dataset, generator, revealLocal) {
     let Arrays = pvalue_test(dataset, true)
@@ -126,27 +233,29 @@ function getKSTestResults(dataset, generator) {
 }
 
 // You can call it like this:
-let ksResults = [
-    getKSTestResults(weakArrays, "Weak Generator"),
-    getKSTestResults(pseudoArrays, "Pseudo Generator"),
-    getKSTestResults(trueArrays, "True Generator"),
-    getKSTestResults(quantumArrays, "Quantum Generator")
-];
+// let ksResults = [
+//     getKSTestResults(weakArrays, "Weak Generator"),
+//     getKSTestResults(pseudoArrays, "Pseudo Generator"),
+//     getKSTestResults(trueArrays, "True Generator"),
+//     getKSTestResults(quantumArrays, "Quantum Generator")
+// ];
 
-let Ranking = [
-    getAverage(weakArrays, "Weak Generator"),
-    getAverage(pseudoArrays, "Pseudo Generator"),
-    getAverage(trueArrays, "True Generator"),
-    getAverage(quantumArrays, "Quantum Generator")
-];
+// let Ranking = [
+//     getAverage(weakArrays, "Weak Generator"),
+//     getAverage(pseudoArrays, "Pseudo Generator"),
+//     getAverage(trueArrays, "True Generator"),
+//     getAverage(quantumArrays, "Quantum Generator")
+// ];
 
-// Add runs test results
-let runsResults = [
-    runs_test(weakArrays),
-    runs_test(pseudoArrays),
-    runs_test(trueArrays),
-    runs_test(quantumArrays)
-];
+// // Add runs test results
+// let runsResults = [
+//     runs_test(weakArrays),
+//     runs_test(pseudoArrays),
+//     runs_test(trueArrays),
+//     runs_test(quantumArrays)
+// ];
+
+let [ksResults, Ranking, runsResults] = results[results.length - 1]
 
 Ranking.sort((a, b) => {
     // 0 = Average P-Value
@@ -199,4 +308,13 @@ log(`Ranking (from most random to least)`)
 
 log(`--------------------------------`)
 
-fs.writeFileSync('results.txt', file.join('\n'));
+fs.writeFileSync('results/results.txt', file.join('\n'));
+
+// TODO: graph data changes over time
+// true and CSRNG fight over 2nd place
+
+generateCSVs();
+
+fs.writeFileSync('results/data.json', JSON.stringify(results));
+
+require('./graph.js')
