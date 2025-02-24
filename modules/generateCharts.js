@@ -254,15 +254,6 @@ async function generateQQPlot(distributions) {
         };
     });
 
-    datasets.push({
-        label: 'Ideal Uniform',
-        data: Array.from({ length: 100 }, (_, i) => ({ x: i / 100, y: i / 100 * maxValue })),
-        borderColor: 'white',
-        borderWidth: 2,
-        fill: false,
-        pointRadius: 0
-    });
-
     const chartConfig = {
         type: 'scatter',
         data: { datasets: datasets },
