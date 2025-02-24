@@ -8,10 +8,10 @@
     Shapiro-Wilk Test
 */
 
-import { weakRandom } from "./generators/weakRandom";
-import { pseudoRandom } from "./generators/pseudoRandom";
-import { trueRandom } from "./generators/trueRandom";
-import { quantumRandom } from "./generators/quantumRandom";
+import { weakRandom } from "../generators/weakRandom";
+import { pseudoRandom } from "../generators/pseudoRandom";
+import { trueRandom } from "../generators/trueRandom";
+import { quantumRandom } from "../generators/quantumRandom";
 
 const fs = require('fs')
 
@@ -59,4 +59,5 @@ setInterval(async () => {
     }, 5000);
 }, 120000);
 
+console.log("Starting...")
 await writeData()

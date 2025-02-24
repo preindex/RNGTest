@@ -1,4 +1,4 @@
-import {pvalue_test} from '../modules/tests'
+import {pvalue_test, kstest, runs_test} from '../modules/tests'
 import { generateRNGCharts } from '../modules/generateCharts';
 import fs from 'fs';
 
@@ -102,11 +102,50 @@ function getAverage(dataset, generator, revealLocal) {
     return [AveragePValue, AverageStatistic, generator]
 }
 
+function getKSTestResults(dataset, generator) {
+    let results = [];
+    
+    // Compare each array with every other array
+    for (let i = 0; i < dataset.length; i++) {
+        for (let j = i + 1; j < dataset.length; j++) {
+            let result = kstest(dataset[i], dataset[j]);
+            results.push(result);
+        }
+    }
+    
+    // Calculate averages
+    let avgStatistic = results.reduce((acc, r) => acc + r.statistic, 0) / results.length;
+    let avgPValue = results.reduce((acc, r) => acc + r.pValue, 0) / results.length;
+    
+    console.log(`KS-Test Results for ${generator}:`);
+    console.log(`Average Statistic: ${avgStatistic}`);
+    console.log(`Average P-Value: ${avgPValue}`);
+    console.log('-'.repeat(25));
+    
+    return [avgPValue, avgStatistic, generator];
+}
+
+// You can call it like this:
+let ksResults = [
+    getKSTestResults(weakArrays, "Weak Generator"),
+    getKSTestResults(pseudoArrays, "Pseudo Generator"),
+    getKSTestResults(trueArrays, "True Generator"),
+    getKSTestResults(quantumArrays, "Quantum Generator")
+];
+
 let Ranking = [
     getAverage(weakArrays, "Weak Generator"),
     getAverage(pseudoArrays, "Pseudo Generator"),
     getAverage(trueArrays, "True Generator"),
     getAverage(quantumArrays, "Quantum Generator")
+];
+
+// Add runs test results
+let runsResults = [
+    runs_test(weakArrays),
+    runs_test(pseudoArrays),
+    runs_test(trueArrays),
+    runs_test(quantumArrays)
 ];
 
 Ranking.sort((a, b) => {
@@ -123,13 +162,41 @@ Ranking.sort((a, b) => {
 
 await generateRNGCharts(Ranking, distributions);
 
-console.log(`Ranking (from most random to least)`)
+let file = [];
+let log = (string) => {
+    file.push(string);
+    console.log(string);
+}
+log(`--------------------------------`)
+
+// After your existing log sections, add:
+log('Runs Test Results:');
+log('-'.repeat(25));
+runsResults.forEach((result, index) => {
+    const generators = ["Weak", "Pseudo", "True", "Quantum"];
+    log(`${generators[index]} Generator:`);
+    log(`Z-Statistic: ${result.statistic}`);
+    log(`P-Value: ${result.pValue}`);
+    log('-'.repeat(25));
+});
+
+log('-'.repeat(25));
+
+log('KTest Results')
+for (let Array of ksResults) {
+    log(`  --> ${Array[2]} (p-value: ${Array[0]}, statistic: ${Array[1]})`)
+}
+
+log(`--------------------------------`)
+log(`Ranking (from most random to least)`)
 
 {    
     let Index = 1
     for (let Array of Ranking) {
-        console.log("   --> " + Array[2] + ` (#${Index++}) [${Array[0] > 16.92 ? "Large (reject null)" : "Small (accept null)"}]`) // 16.92 is the critical value for DoF of 9 and alpha of 0.05
+        log("   --> " + Array[2] + ` (#${Index++}) [${Array[0] > 16.92 ? "Large (reject null)" : "Small (accept null)"}]`) // 16.92 is the critical value for DoF of 9 and alpha of 0.05
     }
 }
 
-console.log(`--------------------------------\nshoutout to miguel he's my goat fr`)
+log(`--------------------------------`)
+
+fs.writeFileSync('results.txt', file.join('\n'));
