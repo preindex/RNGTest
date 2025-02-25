@@ -1,3 +1,39 @@
+KS-Test Results for Weak Generator:
+Average Statistic: 0.2985982271696576
+Average P-Value: 0.4496056146084592
+-------------------------
+KS-Test Results for Pseudo Generator:
+Average Statistic: 0.29511440940012584
+Average P-Value: 0.4573814482392938
+-------------------------
+KS-Test Results for True Generator:
+Average Statistic: 0.31463615749330215
+Average P-Value: 0.4230736776126271
+-------------------------
+KS-Test Results for Quantum Generator:
+Average Statistic: 0.2961657390228832
+Average P-Value: 0.4558650718009056
+-------------------------
+True Average P-Value Across All Weak Generator Data: 0.9892932665461279
+True Average Degree Across All Weak Generator Data: 9
+True Average Statistic Across All Weak Generator Data: 1.501034980550714
+-------------------------
+True Average P-Value Across All Pseudo Generator Data: 0.9754023992587783
+True Average Degree Across All Pseudo Generator Data: 9
+True Average Statistic Across All Pseudo Generator Data: 1.8397694640762026
+-------------------------
+True Average P-Value Across All True Generator Data: 0.9716288283456994
+True Average Degree Across All True Generator Data: 9
+True Average Statistic Across All True Generator Data: 2.0787146793280087
+-------------------------
+True Average P-Value Across All Quantum Generator Data: 0.9715186362208049
+True Average Degree Across All Quantum Generator Data: 9
+True Average Statistic Across All Quantum Generator Data: 1.9248594800568832
+-------------------------
+99
+99
+99
+99
 --------------------------------
 Runs Test Results:
 -------------------------

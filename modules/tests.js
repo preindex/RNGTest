@@ -5,13 +5,6 @@ function createHash(string) {
     return crypto.createHash('sha1').update(string).digest('hex')
 }
 
-export function repeat_test(data) { // Repeat Test
-    // 10 sets data
-    for (let i = 0; i < data.length; i++) {
-    
-    }
-}
-
 export function pvalue_test(data, removeEmpty) { // Chi Square Test
     // 10 sets data
     let numbers = []

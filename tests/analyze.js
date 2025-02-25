@@ -16,7 +16,13 @@ let distributions = {
 
 let results = [];
 
-let old = console.log
+let c = 0;
+let old = console.log;
+let file = [];
+let log = (string) => {
+    file.push(string);
+    old(string);
+}
 console.log = function() {}
 fs.readdirSync('./logs').forEach(file => {
     let Data = fs.readFileSync(`./logs/${file}`, 'utf8').split('\n').splice(1)
@@ -56,6 +62,12 @@ fs.readdirSync('./logs').forEach(file => {
     trueArrays[trueArrays.length] = trueArray
     quantumArrays[quantumArrays.length] = quantumArray
 
+    if (results.length == 98) {
+        console.log = log
+        getData();
+        console.log = old
+        return
+    }
     getData();
 })
 
@@ -249,11 +261,6 @@ Ranking.sort((a, b) => {
 
 await generateRNGCharts(Ranking, distributions);
 
-let file = [];
-let log = (string) => {
-    file.push(string);
-    console.log(string);
-}
 log(`--------------------------------`)
 
 log('Runs Test Results:');
