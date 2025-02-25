@@ -1,6 +1,4 @@
-import fs from 'fs';
-
-const chi2test = require('@stdlib/stats-chi2test');
+const chi2test = require('@stdlib/stats-chi2test')
 const crypto = require('crypto')
 
 function createHash(string) {

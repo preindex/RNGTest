@@ -232,28 +232,6 @@ function getKSTestResults(dataset, generator) {
     return [avgPValue, avgStatistic, generator];
 }
 
-// You can call it like this:
-// let ksResults = [
-//     getKSTestResults(weakArrays, "Weak Generator"),
-//     getKSTestResults(pseudoArrays, "Pseudo Generator"),
-//     getKSTestResults(trueArrays, "True Generator"),
-//     getKSTestResults(quantumArrays, "Quantum Generator")
-// ];
-
-// let Ranking = [
-//     getAverage(weakArrays, "Weak Generator"),
-//     getAverage(pseudoArrays, "Pseudo Generator"),
-//     getAverage(trueArrays, "True Generator"),
-//     getAverage(quantumArrays, "Quantum Generator")
-// ];
-
-// // Add runs test results
-// let runsResults = [
-//     runs_test(weakArrays),
-//     runs_test(pseudoArrays),
-//     runs_test(trueArrays),
-//     runs_test(quantumArrays)
-// ];
 
 let [ksResults, Ranking, runsResults] = results[results.length - 1]
 
@@ -278,7 +256,6 @@ let log = (string) => {
 }
 log(`--------------------------------`)
 
-// After your existing log sections, add:
 log('Runs Test Results:');
 log('-'.repeat(25));
 runsResults.forEach((result, index) => {
@@ -310,7 +287,6 @@ log(`--------------------------------`)
 
 fs.writeFileSync('results/results.txt', file.join('\n'));
 
-// TODO: graph data changes over time
 // true and CSRNG fight over 2nd place
 
 generateCSVs();
