@@ -136,7 +136,6 @@ export function kstest(data1, data2) {
 // }
 
 export function runs_test(data) {
-    console.log(data.length)
     let results = [];
     
     for (let array of data) {
