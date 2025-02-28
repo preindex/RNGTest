@@ -14,44 +14,40 @@ KS-Test Results for Quantum Generator:
 Average Statistic: 0.2961657390228832
 Average P-Value: 0.4558650718009056
 -------------------------
-True Average P-Value Across All Weak Generator Data: 0.9892932665461279
+True Average P-Value Across All Weak Generator Data: 0.31286385815919754
 True Average Degree Across All Weak Generator Data: 9
-True Average Statistic Across All Weak Generator Data: 1.501034980550714
+True Average Statistic Across All Weak Generator Data: 11.869825911302435
 -------------------------
-True Average P-Value Across All Pseudo Generator Data: 0.9754023992587783
+True Average P-Value Across All Pseudo Generator Data: 0.23214565688911243
 True Average Degree Across All Pseudo Generator Data: 9
-True Average Statistic Across All Pseudo Generator Data: 1.8397694640762026
+True Average Statistic Across All Pseudo Generator Data: 13.793285049290715
 -------------------------
-True Average P-Value Across All True Generator Data: 0.9716288283456994
+True Average P-Value Across All True Generator Data: 0.19701193947521126
 True Average Degree Across All True Generator Data: 9
-True Average Statistic Across All True Generator Data: 2.0787146793280087
+True Average Statistic Across All True Generator Data: 14.95398652817857
 -------------------------
-True Average P-Value Across All Quantum Generator Data: 0.9715186362208049
+True Average P-Value Across All Quantum Generator Data: 0.20693211791244423
 True Average Degree Across All Quantum Generator Data: 9
-True Average Statistic Across All Quantum Generator Data: 1.9248594800568832
+True Average Statistic Across All Quantum Generator Data: 14.772193084678111
 -------------------------
-99
-99
-99
-99
 --------------------------------
 Runs Test Results:
 -------------------------
 Weak Generator:
-Z-Statistic: -2.6697439274848653
-P-Value: 0.007634055314337704
+Z-Statistic: 0.10884836964903886
+P-Value: 0.5150704182292952
 -------------------------
 Pseudo Generator:
-Z-Statistic: -2.657425263437519
-P-Value: 0.008148200785255513
+Z-Statistic: -0.009819180381452469
+P-Value: 0.5112728945031969
 -------------------------
 True Generator:
-Z-Statistic: -2.6703189793853017
-P-Value: 0.00759983167124024
+Z-Statistic: 0.0828913258678157
+P-Value: 0.4942340085873771
 -------------------------
 Quantum Generator:
-Z-Statistic: -2.6716879234804116
-P-Value: 0.007571456250491382
+Z-Statistic: -0.05693366396366347
+P-Value: 0.47046136790860954
 -------------------------
 -------------------------
 KTest Results
@@ -61,8 +57,8 @@ KTest Results
   --> Quantum Generator (p-value: 0.45649426679930977, statistic: 0.2957979797979811)
 --------------------------------
 Ranking (from most random to least)
-   --> Quantum Generator (#1) [Small (accept null)]
-   --> True Generator (#2) [Small (accept null)]
-   --> Pseudo Generator (#3) [Small (accept null)]
-   --> Weak Generator (#4) [Small (accept null)]
+   --> True Generator (#1) [Small (reject null)]
+   --> Quantum Generator (#2) [Small (reject null)]
+   --> Pseudo Generator (#3) [Small (reject null)]
+   --> Weak Generator (#4) [Small (reject null)]
 --------------------------------

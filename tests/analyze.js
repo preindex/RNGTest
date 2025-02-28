@@ -227,7 +227,11 @@ function getKSTestResults(dataset, generator) {
     // Compare each array with every other array
     for (let i = 0; i < dataset.length; i++) {
         for (let j = i + 1; j < dataset.length; j++) {
-            let result = kstest(dataset[i], dataset[j]);
+            // Create deep copies to prevent mutation
+            let copyI = [...dataset[i]]; // or JSON.parse(JSON.stringify(dataset[i])) for nested arrays
+            let copyJ = [...dataset[j]];
+
+            let result = kstest(copyI, copyJ);
             results.push(result);
         }
     }
@@ -243,6 +247,7 @@ function getKSTestResults(dataset, generator) {
     
     return [avgPValue, avgStatistic, generator];
 }
+
 
 
 let [ksResults, Ranking, runsResults] = results[results.length - 1]
@@ -293,11 +298,8 @@ log(`Ranking (from most random to least)`)
 log(`--------------------------------`)
 
 fs.writeFileSync('results/results.txt', file.join('\n'));
+generateCSVs();
+fs.writeFileSync('results/data.json', JSON.stringify(results));
+require('./graph.js')
 
 // true and CSRNG fight over 2nd place
-
-generateCSVs();
-
-fs.writeFileSync('results/data.json', JSON.stringify(results));
-
-require('./graph.js')
