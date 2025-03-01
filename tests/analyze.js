@@ -275,6 +275,8 @@ runsResults.forEach((result, index) => {
     log(`${generators[index]} Generator:`);
     log(`Z-Statistic: ${result.statistic}`);
     log(`P-Value: ${result.pValue}`);
+    log(`Runs: ${result.runs}`);
+    log(`Expected Runs: ${result.expectedRuns}`);
     log('-'.repeat(25));
 });
 

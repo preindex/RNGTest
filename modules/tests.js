@@ -70,71 +70,6 @@ export function kstest(data1, data2) {
     };
 }
 
-// export function runs_test(data) {
-//     let results = [];
-    
-//     for (let array of data) {
-//         // Calculate median
-//         let sortedArray = [...array].sort((a, b) => a - b);
-//         let median = sortedArray.length % 2 === 0 
-//             ? (sortedArray[sortedArray.length/2 - 1] + sortedArray[sortedArray.length/2]) / 2
-//             : sortedArray[Math.floor(sortedArray.length/2)];
-
-//         // Convert to binary sequence based on median
-//         let binarySequence = array.map(num => num > median ? 1 : 0);
-        
-//         // Count runs
-//         let runs = 1;
-//         for (let i = 1; i < binarySequence.length; i++) {
-//             if (binarySequence[i] !== binarySequence[i-1]) {
-//                 runs++;
-//             }
-//         }
-
-//         // Count n1 and n2
-//         let n1 = binarySequence.filter(x => x === 1).length;
-//         let n2 = binarySequence.filter(x => x === 0).length;
-        
-//         // Calculate expected runs and standard deviation
-//         let expectedRuns = ((2 * n1 * n2) / (n1 + n2)) + 1;
-//         let standardDev = Math.sqrt((2 * n1 * n2 * (2 * n1 * n2 - n1 - n2)) / 
-//                                   (Math.pow(n1 + n2, 2) * (n1 + n2 - 1)));
-
-//         // Calculate Z-statistic
-//         let zStat = (runs - expectedRuns) / standardDev;
-        
-//         // Calculate p-value
-//         let pValue = 2 * (1 - normalCDF(Math.abs(zStat)));
-
-//         results.push({
-//             runs,
-//             expectedRuns,
-//             zStat,
-//             pValue
-//         });
-//     }
-
-//     // Calculate average results
-//     let avgPValue = results.reduce((acc, r) => acc + r.pValue, 0) / results.length;
-//     let avgZStat = results.reduce((acc, r) => acc + r.zStat, 0) / results.length;
-
-//     return {
-//         statistic: avgZStat,
-//         pValue: avgPValue
-//     };
-// }
-
-// // Helper function for normal CDF
-// function normalCDF(z) {
-//     let t = 1 / (1 + 0.2316419 * Math.abs(z));
-//     let d = 0.3989423 * Math.exp(-z * z / 2);
-//     let prob = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
-//     if (z > 0) {
-//         prob = 1 - prob;
-//     }
-//     return prob;
-// }
-
 export function runs_test(data) {
     let results = [];
     
@@ -180,13 +115,17 @@ export function runs_test(data) {
         });
     }
 
-    // Calculate average results
+    // Calculate all averages
     let avgPValue = results.reduce((acc, r) => acc + r.pValue, 0) / results.length;
     let avgZStat = results.reduce((acc, r) => acc + r.zStat, 0) / results.length;
+    let avgRuns = results.reduce((acc, r) => acc + r.runs, 0) / results.length;
+    let avgExpectedRuns = results.reduce((acc, r) => acc + r.expectedRuns, 0) / results.length;
 
     return {
         statistic: avgZStat,
-        pValue: avgPValue
+        pValue: avgPValue,
+        runs: avgRuns,
+        expectedRuns: avgExpectedRuns
     };
 }
 

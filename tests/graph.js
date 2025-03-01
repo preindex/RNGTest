@@ -42,7 +42,7 @@ async function generateStatGraphs() {
     await Promise.all([
         generateChart(logFiles, datasets["KS Statistic"], "KS Statistic Over Logs", "ks_statistic.png"),
         generateChart(logFiles, datasets["Chi-Square Statistic"], "Chi-Square Statistic Over Logs", "chi_square_statistic.png"),
-        generateChart(logFiles, datasets["Runs Test Statistic"], "Runs Test Statistic Over Logs", "runs_statistic.png"),
+        generateChart(logFiles, datasets["Runs Test Statistic"], "Runs Test Z-Statistic Over Logs", "runs_statistic.png"),
         generateChart(logFiles, datasets["KS P-Value"], "KS P-Value Over Logs", "ks_pvalue.png"),
         generateChart(logFiles, datasets["Chi-Square P-Value"], "Chi-Square P-Value Over Logs", "chi_square_pvalue.png"),
         generateChart(logFiles, datasets["Runs Test P-Value"], "Runs Test P-Value Over Logs", "runs_pvalue.png"),
